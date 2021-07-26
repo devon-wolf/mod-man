@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-base",
+  "name": "mod-man",
   "version": "1.0.0",
-  "description": "A TypeScript template for Node-Express-Postgres projects",
+  "description": "",
   "main": "dist/server.js",
   "scripts": {
     "test": "jest --verbose --runInBand --testLocationInResults --detectOpenHandles --setupFiles dotenv/config",
@@ -10,7 +10,7 @@
     "start:dev": "nodemon  -r dotenv/config dist/server.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
     "start:watch": "concurrently \"npm:build:dev\" \"npm:start:dev\"",
-    "setup-db": "tsc && node dist/setup-db.js"
+    "setup-db": "tsc && node -r dotenv/config dist/setup-db.js"
   },
   "jest": {
     "preset": "ts-jest",
@@ -27,6 +27,7 @@
     "@types/express": "^4.17.12",
     "@types/jest": "^26.0.24",
     "@types/pg": "^8.6.1",
+    "@types/superagent": "^4.1.12",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
@@ -41,6 +42,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "superagent": "^6.1.0"
   }
 }
