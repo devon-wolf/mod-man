@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-base",
+  "name": "mod-man",
   "version": "1.0.0",
-  "description": "A TypeScript template for Node-Express-Postgres projects",
+  "description": "",
   "main": "dist/server.js",
   "scripts": {
     "test": "jest --verbose --runInBand --testLocationInResults --detectOpenHandles --setupFiles dotenv/config",
@@ -10,7 +10,7 @@
     "start:dev": "nodemon  -r dotenv/config dist/server.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
     "start:watch": "concurrently \"npm:build:dev\" \"npm:start:dev\"",
-    "setup-db": "tsc && node dist/setup-db.js"
+    "setup-db": "tsc && node -r dotenv/config dist/setup-db.js"
   },
   "jest": {
     "preset": "ts-jest",
