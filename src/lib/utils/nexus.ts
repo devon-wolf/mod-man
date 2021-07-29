@@ -1,11 +1,42 @@
 import request from 'superagent';
 
 const URL = 'api.nexusmods.com';
-const token = process.env.NEXUS_API_KEY;
+const appVersion = '0.0.1';
 
-export const getAllGames = () => {
-	return request
-		.get(`${URL}/v1/games.json`)
-		.set({ apiKey: token })
-		.then(response => response.body);
+const getFromNexus = (urlString: string, token: string): Promise<unknown> => {
+    return request
+        .get(urlString)
+        .set({
+            apiKey: token,
+            'Application-Version': appVersion,
+            'Application-Name': 'mod-man'
+        })
+        .then(response => response.body)
+        .catch(error => ({ message: error.message }));
+};
+
+export const getAllGames = (token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games.json`, token);
+};
+
+export const getGameByDomain = (domain: string, token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games/${domain}.json`, token);
+};
+
+export const getModById = (domain: string, id: string, token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}.json`, token);
+};
+
+
+export const getModFileList = (domain: string, id: string, token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files.json`, token);
+};
+
+export const getModFileDetails = (domain: string, id: string, fileId: string, token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files/${fileId}.json`, token);
+};
+
+// there are additional circumstances to consider here, probably don't use yet
+export const getModDownloadLink = (domain: string, id: string, fileId: string, token: string): Promise<unknown> => {
+    return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files/${fileId}/download_link.json`, token);
 };
