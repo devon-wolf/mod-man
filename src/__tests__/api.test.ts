@@ -1,9 +1,13 @@
 import {
     getAllGames,
-    getGameByDomain
+    getGameByDomain,
+    getModById,
+    getModFileList,
+    getModFileDetails
 } from '../lib/utils/nexus';
 
 import { nexusMorrowind } from '../data/sample-data/morrowind';
+import { nexusSmapi } from '../data/sample-data/smapi';
 
 describe('Nexus API', () => {
     const apiKey = process.env.NEXUS_API_KEY || 'no key found';
@@ -34,6 +38,21 @@ describe('Nexus API', () => {
                     file_endorsements: expect.any(Number),
                     mods: expect.any(Number),
                     categories: expect.any(Array)
+                });
+            });
+    });
+
+    it('gets a mod from Nexus by its game domain and id', () => {
+        return getModById('stardewvalley', '2400', apiKey)
+            .then(response => {
+                expect(response).toEqual({
+                    ...nexusSmapi,
+                    description: expect.any(String),
+                    version: expect.any(String),
+                    endorsement_count: expect.any(Number),
+                    updated_timestamp: expect.any(Number),
+                    updated_time: expect.any(String),
+                    endorsement: expect.any(Object)
                 });
             });
     });
