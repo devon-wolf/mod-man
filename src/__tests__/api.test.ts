@@ -67,4 +67,11 @@ describe('Nexus API', () => {
             });
     });
 
+    it('gets the data for a single mod file by its id', () => {
+        return getModFileDetails('stardewvalley', '2400', '9624', apiKey)
+            .then(response => {
+                expect(response).toHaveProperty('id', [9624, 1303]);
+            });
+
+    });
 });
