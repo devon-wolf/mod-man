@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
-export default Router()
+const modsController = Router()
     .post('/', (req, res, next) => {
         res.send('nothing');
     });
 	
+export default modsController;

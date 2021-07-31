@@ -1,7 +1,9 @@
 export class ExpressError extends Error {
 	status: number | undefined;
 }
-
+export interface ErrorMessage {
+	message: string
+}
 export interface NexusCategory {
 	category_id: number,
 	name: string,
@@ -23,6 +25,14 @@ export interface NexusGame {
 	mods: number,
 	categories: NexusCategory[]
 }
-export interface ErrorMessage {
-	message: string
+
+export interface UserRow {
+	id: string,
+	email: string,
+	hash: string
+}
+
+export interface UserRequest {
+	email: string,
+	password: string
 }
