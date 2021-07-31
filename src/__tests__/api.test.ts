@@ -3,7 +3,8 @@ import {
     getGameByDomain,
     getModById,
     getModFileList,
-    getModFileDetails
+    getModFileDetails,
+    getModDownloadLink
 } from '../lib/utils/nexus';
 
 import { nexusMorrowind } from '../data/sample-data/morrowind';
@@ -68,10 +69,20 @@ describe('Nexus API', () => {
     });
 
     it('gets the data for a single mod file by its id', () => {
-        return getModFileDetails('stardewvalley', '2400', '9624', apiKey)
+        return getModFileDetails('stardewvalley', '2400', '42919', apiKey)
             .then(response => {
-                expect(response).toHaveProperty('id', [9624, 1303]);
+                expect(response).toHaveProperty('id', [42919, 1303]);
             });
-
     });
+
+    it('returns a denial message when trying to generate a download link as a non-premium member', () => {
+        return getModDownloadLink('stardewvalley', '2400', '42919', apiKey)
+            .then(response => {
+                expect(response).toEqual({
+                    message: 'Forbidden'
+                });
+            });
+    });
+
+
 });

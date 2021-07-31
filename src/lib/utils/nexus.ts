@@ -32,6 +32,7 @@ export const getModById = (domain: string, id: string, token: string): Promise<u
     return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}.json`, token);
 };
 
+// gives old files as well as current; category for current is category_name: "MAIN"
 export const getModFileList = (domain: string, id: string, token: string): Promise<unknown> => {
     return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files.json`, token);
 };
@@ -40,7 +41,7 @@ export const getModFileDetails = (domain: string, id: string, fileId: string, to
     return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files/${fileId}.json`, token);
 };
 
-// there are additional circumstances to consider here, probably don't use yet
+// does not get a download link for non-premium members
 export const getModDownloadLink = (domain: string, id: string, fileId: string, token: string): Promise<unknown> => {
     return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}/files/${fileId}/download_link.json`, token);
 };
