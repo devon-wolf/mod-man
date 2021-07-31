@@ -51,7 +51,8 @@ describe('Users', () => {
         
         expect(response.body).toEqual({
             id: '1',
-            email: 'seed@user.com'
+            email: 'seed@user.com',
+            token: expect.any(String)
         });
     });
 

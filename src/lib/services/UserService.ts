@@ -28,7 +28,6 @@ export default class UserService {
         if (userExists) return ({ message: 'A user already exists with that email' });
 
         else {
-            // TODO actually hash the password
             const hash = bcrypt.hashSync(password, 8);
             try {
                 const user = await User.create(email, hash);
