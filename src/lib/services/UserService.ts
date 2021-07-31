@@ -28,15 +28,20 @@ export default class UserService {
     }
 
     static async login({ email, password }: UserRequest): Promise<User | ErrorMessage> {
-        const hash = password.split('').reverse().join();
+        const userExists = await this.checkForUser(email);
 
-        try {
-            const user = await User.getByCredentials(email, hash);
-            return user;
-        }
-        catch (error) {
-            console.log(error);
-            return ({ message: 'Could not find that user' });
+        if (!userExists) return ({ message: 'No user with that email exists in the database' });
+        
+        else {
+            const hash = password.split('').reverse().join();
+
+            try {
+                const user = await User.getByCredentials(email, hash);
+                return user;
+            }
+            catch (error) {
+                return ({ message: 'Incorrect password' });
+            }
         }
     }
 }

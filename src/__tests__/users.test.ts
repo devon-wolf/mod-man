@@ -56,4 +56,30 @@ describe('Users', () => {
             email: 'seed@user.com'
         });
     });
+
+    it('fails to login if given the wrong password', async () => {
+        const response = await request(app)
+            .post('/api/v1/auth/login')
+            .send({
+                email: 'seed@user.com',
+                password: 'wrongpassword'
+            });
+
+        expect(response.body).toEqual({
+            message: 'Incorrect password'
+        });
+    });
+
+    it('fails to login if given a nonexisting email', async () => {
+        const response = await request(app)
+            .post('/api/v1/auth/login')
+            .send({
+                email: 'new@user.com',
+                password: 'somenewpassword'
+            });
+
+        expect(response.body).toEqual({
+            message: 'No user with that email exists in the database'
+        });
+    });
 });
