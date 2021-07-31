@@ -21,14 +21,25 @@ export default class User {
 	    return new User(rows[0]);
 	}
 
-	static async getByCredentials(email: string, hash: string): Promise<User> {
+	static async check(email: string): Promise<boolean> {
 	    const { rows } = await pool.query(`
 		SELECT * FROM users
-		WHERE email=$1 and
-		hash=$2`,
-	    [email, hash]);
+		WHERE email=$1`,
+	    [email]);
 
-	    return new User(rows[0]);
+	    return rows.length
+	        ? true
+	        : false;
 	}
 
+	static async getByCredentials(email: string, hash?: string): Promise<User> {
+	
+	    const { rows } = await pool.query(`
+			SELECT * FROM users
+			WHERE email=$1 and
+			hash=$2`,
+	    [email, hash]);
+	
+	    return new User(rows[0]);
+	}
 }

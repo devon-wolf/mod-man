@@ -30,6 +30,19 @@ describe('Users', () => {
         });
     });
 
+    it('gives an error message when trying to create a user with an existing email', async () => {
+        const response = await request(app)
+            .post('/api/v1/auth/signup')
+            .send({
+                email: 'seed@user.com',
+                password: 'differentpassword'
+            });
+
+        expect(response.body).toEqual({
+            message: 'A user already exists with that email'
+        });
+    });
+
     it('logs in an existing user', async () => {
         const response = await request(app)
             .post('/api/v1/auth/login')
