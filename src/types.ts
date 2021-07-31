@@ -1,5 +1,11 @@
+import { Request } from 'express';
+
 export class ExpressError extends Error {
 	status: number | undefined;
+}
+
+export interface RequestWithId extends Request {
+	userId: string
 }
 export interface ErrorMessage {
 	message: string
@@ -14,8 +20,7 @@ export interface NexusGame {
 	name: string,
 	forum_url: string,
 	nexusmods_url: string,
-	genre: string, // consider being more specific based on what's available
-	file_count: number,
+	genre: string,
 	downloads: number,
 	domain_name: string,
 	approved_date: number,
@@ -35,4 +40,10 @@ export interface UserRow {
 export interface UserRequest {
 	email: string,
 	password: string
+}
+
+export interface UserWithToken {
+	id: string,
+	email: string,
+	token: string
 }

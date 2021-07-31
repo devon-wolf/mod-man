@@ -9,5 +9,6 @@ export const sign = (profile: Record<string, string>): string => {
 };
 
 export const verify = (token: string): string | jwt.JwtPayload => {
-    return jwt.verify(token, APP_SECRET);
+    const payload = jwt.verify(token, APP_SECRET);
+    return payload;
 };

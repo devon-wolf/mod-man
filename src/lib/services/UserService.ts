@@ -1,11 +1,25 @@
-import { ErrorMessage, UserRequest } from '../../types';
+import { ErrorMessage, UserRequest, UserWithToken } from '../../types';
 import User from '../models/User';
-
+import { sign } from '../utils/jwt';
+import bcrypt from 'bcrypt';
 export default class UserService {
 
-    static async checkForUser(email: string): Promise<boolean> {
-        const userCheck = await User.check(email);
-        return userCheck;
+    static async checkForUser(email: string): Promise<User | false> {
+        try {
+            const userCheck = await User.check(email);
+            return userCheck;
+        }
+        catch (error) {
+            return false;
+        }
+    }
+
+    static getProfileWithToken({ id, email }: User): UserWithToken {
+        return ({
+            email,
+            id,
+            token: sign({ id })
+        });
     }
 
     static async createUser({ email, password }: UserRequest): Promise<User | ErrorMessage> {
@@ -15,7 +29,7 @@ export default class UserService {
 
         else {
             // TODO actually hash the password
-            const hash = password.split('').reverse().join();
+            const hash = bcrypt.hashSync(password, 8);
             try {
                 const user = await User.create(email, hash);
                 return user;
@@ -27,21 +41,15 @@ export default class UserService {
         }
     }
 
-    static async login({ email, password }: UserRequest): Promise<User | ErrorMessage> {
-        const userExists = await this.checkForUser(email);
+    static async login({ email, password }: UserRequest): Promise<UserWithToken | ErrorMessage> {
+        const existingUser = await this.checkForUser(email);
 
-        if (!userExists) return ({ message: 'No user with that email exists in the database' });
+        if (!existingUser) return ({ message: 'No user with that email exists in the database' });
         
         else {
-            const hash = password.split('').reverse().join();
-
-            try {
-                const user = await User.getByCredentials(email, hash);
-                return user;
-            }
-            catch (error) {
-                return ({ message: 'Incorrect password' });
-            }
+            return bcrypt.compareSync(password, existingUser.hash)
+                ? this.getProfileWithToken(existingUser)
+                : { message: 'Incorrect password' };
         }
     }
 }
