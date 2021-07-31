@@ -24,7 +24,7 @@ export default class User {
 	static async getByCredentials(email: string, hash: string): Promise<User> {
 	    const { rows } = await pool.query(`
 		SELECT * FROM users
-		WHERE email=$1,
+		WHERE email=$1 and
 		hash=$2`,
 	    [email, hash]);
 
