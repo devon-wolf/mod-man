@@ -14,7 +14,7 @@ export default class User {
 	static async create(email: string, hash: string): Promise<User> {
 	    const { rows } = await pool.query(`
 			INSERT INTO users (email, hash)
-			VALUES $1, $2
+			VALUES ($1, $2)
 			RETURNING id, email
 		`, [email, hash]);
 
