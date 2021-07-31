@@ -17,7 +17,8 @@
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "<rootDir>/dist/",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/__tests__/sample-data/"
     ]
   },
   "keywords": [],
