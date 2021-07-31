@@ -15,18 +15,16 @@ describe('Users', () => {
     });
 
     it('creates a new user', async () => {
-        const newUser = {
-            email: 'testuser@test.com',
-            password: 'testpassword'
-        };
-
         const response = await request(app)
             .post('/api/v1/auth/signup')
-            .send(newUser);
+            .send({
+                email: 'testuser@test.com',
+                password: 'testpassword'
+            });
         
         expect(response.body).toEqual({
             id: '2',
-            email: newUser.email
+            email: 'testuser@test.com'
         });
     });
 
