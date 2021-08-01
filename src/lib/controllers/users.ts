@@ -1,7 +1,12 @@
 import { Router } from 'express';
+import checkAuth from '../middleware/auth-handling';
 import UserService from '../services/UserService';
 
 const usersController = Router()
+
+// .get('/verify', checkAuth, (req, res) => {
+//     res.send({ verified: true });
+// })
 
     .post('/signup', (req, res, next) => {
         UserService

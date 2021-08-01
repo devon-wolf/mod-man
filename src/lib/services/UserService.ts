@@ -22,7 +22,7 @@ export default class UserService {
         });
     }
 
-    static async createUser({ email, password }: UserRequest): Promise<User | ErrorMessage> {
+    static async createUser({ email, password }: UserRequest): Promise<UserWithToken | ErrorMessage> {
         const userExists = await this.checkForUser(email);
 
         if (userExists) return ({ message: 'A user already exists with that email' });
@@ -31,7 +31,8 @@ export default class UserService {
             const hash = bcrypt.hashSync(password, 8);
             try {
                 const user = await User.create(email, hash);
-                return user;
+
+                return this.getProfileWithToken(user);
             }
             catch (error) {
                 console.log(error);
