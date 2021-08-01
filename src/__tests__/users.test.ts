@@ -82,4 +82,49 @@ describe('Users', () => {
             message: 'No user with that email exists in the database'
         });
     });
+
+    it('verifies a logged in user', async () => {
+        const loginResponse = await request(app)
+            .post('/api/v1/auth/login')
+            .send({
+                email: 'seed@user.com',
+                password: 'seedpassword'
+            });
+        
+        const { token } = loginResponse.body;
+
+        const verification = await request(app)
+            .get('/api/v1/auth/verify')
+            .set({ Authorization: token });
+
+        expect(verification.body).toEqual({
+            verified: true
+        });
+    });
+
+    it('does not verify a user with an invalid token', async () => {
+        await request(app)
+            .post('/api/v1/auth/login')
+            .send({
+                email: 'seed@user.com',
+                password: 'seedpassword'
+            });
+    
+        const verification = await request(app)
+            .get('/api/v1/auth/verify')
+            .set({ Authorization: 'thisisanoldtoken' });
+
+        expect(verification.body).toEqual({
+            message: 'Invalid token'
+        });
+    });
+
+    it('does not verify a request without a token', async () => {
+        const verification = await request(app)
+            .get('/api/v1/auth/verify');
+
+        expect(verification.body).toEqual({
+            message: 'Request requires a token'
+        });
+    });
 });

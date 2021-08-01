@@ -1,10 +1,10 @@
 import { NextFunction, Response } from 'express';
-import { RequestWithId } from '../../types';
+import { DynamicRequest } from '../../types';
 import { verify } from '../utils/jwt';
 
 // based the Alchemy foundations BE bootstrap
 
-const checkAuth = (req: RequestWithId, res: Response, next: NextFunction): void  => {
+const checkAuth = (req: DynamicRequest, res: Response, next: NextFunction): void  => {
     const token = req.get('Authorization');
     if (token) {
         try {
@@ -16,6 +16,9 @@ const checkAuth = (req: RequestWithId, res: Response, next: NextFunction): void 
             return;
         }
         next();
+    }
+    else {
+        res.status(401).send({ message: 'Request requires a token' });
     }
 };
 

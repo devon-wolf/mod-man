@@ -7,6 +7,11 @@ export class ExpressError extends Error {
 export interface RequestWithId extends Request {
 	userId: string
 }
+
+export interface DynamicRequest extends Request {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any
+}
 export interface ErrorMessage {
 	message: string
 }
