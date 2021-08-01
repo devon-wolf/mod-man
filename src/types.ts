@@ -4,10 +4,6 @@ export class ExpressError extends Error {
 	status: number | undefined;
 }
 
-export interface RequestWithId extends Request {
-	userId: string
-}
-
 export interface DynamicRequest extends Request {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any
