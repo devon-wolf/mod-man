@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import authController from './auth';
+import checkAuth from '../middleware/auth-handling';
 import UserService from '../services/UserService';
 
 const usersController = Router()
 
-    .get('/verify', authController, (req, res) => {
+    .get('/verify', checkAuth, (req, res) => {
         res.send({ verified: true });
     })
 
