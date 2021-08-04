@@ -9,6 +9,8 @@ const checkAuth = (req: DynamicRequest, res: Response, next: NextFunction): void
     if (token) {
         try {
             const payload = verify(token);
+
+            // TODO make this line less clunky
             if (typeof payload === 'object') req.userId = payload.id;
         }
         catch (error) {
