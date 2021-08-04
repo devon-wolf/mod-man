@@ -4,14 +4,17 @@ import app from '../lib/app';
 import pool from '../lib/utils/pool';
 
 describe('Users', () => {
+    let token = '';
+
     beforeEach(async () => {
         await setup(pool);
-        await request(app)
+        const signUp = await request(app)
             .post('/api/v1/auth/signup')
             .send({
                 email: 'seed@user.com',
                 password: 'seedpassword'
             });
+        token = signUp.body.token;
     });
 
     it('creates a new user', async () => {
@@ -84,15 +87,6 @@ describe('Users', () => {
     });
 
     it('verifies a logged in user', async () => {
-        const loginResponse = await request(app)
-            .post('/api/v1/auth/login')
-            .send({
-                email: 'seed@user.com',
-                password: 'seedpassword'
-            });
-        
-        const { token } = loginResponse.body;
-
         const verification = await request(app)
             .get('/api/v1/auth/verify')
             .set({ Authorization: token });
@@ -103,16 +97,9 @@ describe('Users', () => {
     });
 
     it('does not verify a user with an invalid token', async () => {
-        await request(app)
-            .post('/api/v1/auth/login')
-            .send({
-                email: 'seed@user.com',
-                password: 'seedpassword'
-            });
-    
         const verification = await request(app)
             .get('/api/v1/auth/verify')
-            .set({ Authorization: 'thisisanoldtoken' });
+            .set({ Authorization: 'thisisanirrelevanttoken' });
 
         expect(verification.body).toEqual({
             message: 'Invalid token'

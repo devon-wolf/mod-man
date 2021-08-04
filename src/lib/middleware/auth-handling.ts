@@ -14,10 +14,8 @@ const checkAuth = (req: DynamicRequest, res: Response, next: NextFunction): void
             
             next();
         }
-        
         catch (error) {
             res.status(401).send({ message: 'Invalid token' });
-            return;
         }
     }
     else {
