@@ -22,7 +22,10 @@ describe('Mods', () => {
         const response = await request(app)
             .post('/api/v1/account/mods')
             .set({ Authorization: token })
-            .send(nexusSMAPI);
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: 2400
+            });
 
         const {
             name,
