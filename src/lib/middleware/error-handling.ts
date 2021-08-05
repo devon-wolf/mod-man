@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { ExpressError } from '../../types'; 
+import { DynamicError } from '../../types'; 
 
-export const handleError = (err: ExpressError, req: Request, res: Response): void => {
+export const handleError = (err: DynamicError, req: Request, res: Response): void => {
     console.log(err);
     
     const status = err.status || 500;
@@ -14,7 +14,7 @@ export const handleError = (err: ExpressError, req: Request, res: Response): voi
 };
 
 export const handleNotFound = (req: Request, res: Response, next: NextFunction): void => {
-    const err = new ExpressError('Not Found');
+    const err = new DynamicError('Not Found');
     err.status = 404;
     next(err);
 };
