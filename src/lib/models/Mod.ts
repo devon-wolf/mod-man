@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { ModRow } from '../../types';
 import pool from '../utils/pool';
 
