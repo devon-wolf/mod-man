@@ -30,6 +30,7 @@ CREATE TABLE mods (
 	version TEXT NOT NULL,	
 	author TEXT NOT NULL,
 	dependencies TEXT[],
+	updated_timestamp INTEGER NOT NULL,
 	game_id INTEGER NOT NULL REFERENCES games(id)
 );
 
