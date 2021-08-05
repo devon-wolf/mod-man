@@ -34,6 +34,24 @@ export interface UserWithToken {
 	token: string
 }
 
+///////////////
+/* Mod Types */
+//////////////
+export interface ModRow {
+	id: string;
+	name: string;
+	summary: string;
+	db_uid: string;
+	db_mod_id: number;
+	db_game_id: number;
+	domain_name: string;
+	version: string;
+	author: string;
+	dependencies: string[];
+	updated_timestamp: number;
+	game_id: string;
+}
+
 //////////////////////
 /* Nexus API Types */
 ////////////////////
