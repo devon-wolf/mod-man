@@ -39,5 +39,5 @@ CREATE TABLE mods (
 CREATE TABLE user_mods (
 	"user_id" BIGINT REFERENCES users(id),
 	mod_id BIGINT REFERENCES mods(id),
-	last_download TEXT NOT NULL
+	current_version TEXT NOT NULL
 );

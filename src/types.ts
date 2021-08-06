@@ -52,6 +52,12 @@ export interface ModRow {
 	game_id: string;
 }
 
+export interface UserModRow {
+	user_id: string,
+	mod_id: string,
+	current_version: string;
+}
+
 export interface ModRequest {
 	gameDomain: string;
 	modId: string;
