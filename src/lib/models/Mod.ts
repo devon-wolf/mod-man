@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { ModRow } from '../../types';
+import { ModRow, NexusMod } from '../../types';
 import pool from '../utils/pool';
 
 export default class Mod {
@@ -29,5 +29,39 @@ export default class Mod {
 	    this.dependencies = row.dependencies;
 	    this.updatedAt = row.updated_timestamp;
 	    this.gameId = row.game_id;
+	}
+
+	static async insert(mod: NexusMod): Promise<Mod> {
+	    const { rows } = await pool.query(`
+		INSERT INTO mods
+		(
+			name,
+			summary,
+			db_uid,
+			db_mod_id,
+			db_game_id,
+			domain_name,
+			version,
+			author,
+			dependencies,
+			updated_timestamp,
+			game_id
+		)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+		RETURNING *
+		`, [
+	        mod.name,
+	        mod.summary,
+	        mod.uid,
+	        mod.game_id,
+	        mod.domain_name,
+	        mod.version,
+	        mod.author,
+	        [],
+	        mod.updated_timestamp,
+	        1
+	    ]);
+
+	    return new Mod(rows[0]);
 	}
 }

@@ -1,9 +1,11 @@
 import request from 'superagent';
+import { NexusGame, NexusMod } from '../../types';
 
 const URL = 'api.nexusmods.com';
 const appVersion = '0.0.1';
 
-const getFromNexus = async (urlString: string, token: string): Promise<unknown> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getFromNexus = async (urlString: string, token: string): Promise<any> => {
     try {
         const response = await request
             .get(urlString)
@@ -24,11 +26,11 @@ export const getAllGames = (token: string): Promise<unknown> => {
     return getFromNexus(`${URL}/v1/games.json`, token);
 };
 
-export const getGameByDomain = (domain: string, token: string): Promise<unknown> => {
+export const getGameByDomain = (domain: string, token: string): Promise<NexusGame> => {
     return getFromNexus(`${URL}/v1/games/${domain}.json`, token);
 };
 
-export const getModById = (domain: string, id: string, token: string): Promise<unknown> => {
+export const getModById = (domain: string, id: string, token: string): Promise<NexusMod> => {
     return getFromNexus(`${URL}/v1/games/${domain}/mods/${id}.json`, token);
 };
 

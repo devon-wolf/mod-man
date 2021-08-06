@@ -24,7 +24,7 @@ describe('Mods', () => {
             .set({ Authorization: token })
             .send({
                 gameDomain: 'stardewvalley',
-                modId: 2400
+                modId: '2400'
             });
 
         const {
@@ -38,7 +38,6 @@ describe('Mods', () => {
             id: '1',
             name,
             summary,
-            game: 'Stardew Valley',
             version,
             author
         });
