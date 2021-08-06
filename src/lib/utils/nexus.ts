@@ -14,7 +14,7 @@ const getFromNexus = async (urlString: string, token: string): Promise<any> => {
                 'Application-Version': appVersion,
                 'Application-Name': 'mod-man'
             });
-
+        
         return response.body;
     }
     catch(error) {

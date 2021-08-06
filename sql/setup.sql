@@ -31,7 +31,7 @@ CREATE TABLE mods (
 	author TEXT NOT NULL,
 	dependencies TEXT[],
 	updated_timestamp INTEGER NOT NULL,
-	game_id BIGINT NOT NULL REFERENCES games(id)
+	game_id BIGINT REFERENCES games(id)
 );
 
 -- junction --
