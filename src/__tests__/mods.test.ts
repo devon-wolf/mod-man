@@ -30,7 +30,6 @@ describe('Mods', () => {
         const {
             name,
             summary,
-            version,
             author
         } = nexusSMAPI;
 
@@ -38,7 +37,7 @@ describe('Mods', () => {
             id: '1',
             name,
             summary,
-            version,
+            version: expect.any(String),
             author
         });
     });

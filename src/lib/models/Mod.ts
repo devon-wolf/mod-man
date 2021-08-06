@@ -31,9 +31,7 @@ export default class Mod {
 	    this.gameId = row.game_id;
 	}
 
-	static async insert(mod: NexusMod): Promise<Mod> {
-	    console.log('Before the query log!');
-		
+	static async insert(mod: NexusMod): Promise<Mod> {		
 	    const { rows } = await pool.query(`
 		INSERT INTO mods
 		(name, summary, db_uid, db_mod_id, db_game_id, domain_name, version, author, updated_timestamp)
@@ -43,14 +41,13 @@ export default class Mod {
 	        mod.name,
 	        mod.summary,
 	        mod.uid,
+	        mod.mod_id,
 	        mod.game_id,
 	        mod.domain_name,
 	        mod.version,
 	        mod.author,
 	        mod.updated_timestamp,
 	    ]);
-
-	    console.log('After the query log!');
 		
 	    return new Mod(rows[0]);
 	}
