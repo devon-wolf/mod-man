@@ -68,7 +68,8 @@ export interface ModSummary {
 	name: string;
 	summary: string;
 	version: string;
-	author: string
+	author: string;
+	message: string;
 }
 
 //////////////////////

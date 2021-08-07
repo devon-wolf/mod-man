@@ -36,10 +36,6 @@ export default class Mod {
 	}
 
 	static async insert(mod: NexusMod, userId: string): Promise<Mod> {
-	    // TODO check if mod already exists in database
-	    // if so, update to latest information
-	    // if not, insert
-
 	    const { rows } = await pool.query(`
 		INSERT INTO mods
 		(name, summary, db_uid, db_mod_id, db_game_id, domain_name, version, author, updated_timestamp)
@@ -56,18 +52,20 @@ export default class Mod {
 	        mod.author,
 	        mod.updated_timestamp,
 	    ]);
-		
-	    // TODO check if mod already exists in user_mods table
-	    // if so, send message regarding this
-	    // if not, insert
 
-	    const userModsQuery = await pool.query(`
+	    const userModsQuery = await this.insertUserMod(userId, rows[0]);
+
+	    return new Mod(rows[0], userModsQuery);
+	}
+
+	static async insertUserMod(userId: string, row: ModRow): Promise<UserModRow> {
+	    const { rows } = await pool.query(`
 		INSERT INTO user_mods
 		(user_id, mod_id, current_version)
 		VALUES ($1, $2, $3)
 		RETURNING *
-		`, [userId, rows[0].id, mod.version]);
+		`, [userId, row.id, row.version]);
 
-	    return new Mod(rows[0], userModsQuery.rows[0]);
+	    return rows[0];
 	}
 }

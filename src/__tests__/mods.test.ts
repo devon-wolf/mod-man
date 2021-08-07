@@ -38,7 +38,21 @@ describe('Mods', () => {
             name,
             summary,
             version: expect.any(String),
-            author
+            author,
+            message: expect.any(String)
+        });
+    });
+
+    it('does not add a mod if no token is provided', async () => {
+        const response = await request(app)
+            .post('/api/v1/account/mods')
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        expect(response.body).toEqual({
+            message: 'Request requires a token'
         });
     });
 

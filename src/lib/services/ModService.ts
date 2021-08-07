@@ -8,12 +8,14 @@ export default class ModService {
 
         try {
             const mod = await Mod.insert(nexusMod, userId);
+
             return {
                 id: mod.id,
                 name: mod.name,
                 summary: mod.summary,
                 version: mod.version,
-                author: mod.author
+                author: mod.author,
+                message: `Mod added to user ${mod.userId}'s profile`
             };
         }
         catch (error){
