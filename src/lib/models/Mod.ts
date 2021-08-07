@@ -68,4 +68,17 @@ export default class Mod {
 
 	    return rows[0];
 	}
+
+	static async getUserMods(userId: string): Promise<Mod[]> {
+	    const { rows } = await pool.query(`
+		SELECT
+		*
+		FROM mods
+		LEFT JOIN user_mods
+		ON mods.id = user_mods.mod_id
+		WHERE user_id = $1
+		`, [userId]);
+		
+	    return rows.map(row => new Mod(row, { user_id: row.user_id, mod_id: row.mod_id, current_version: row.current_version }));
+	}
 }

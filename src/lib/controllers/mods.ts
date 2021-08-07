@@ -8,6 +8,13 @@ const modsController = Router()
             .add(req.body, req.userId)
             .then(mod => res.send(mod))
             .catch(next);
+    })
+    
+    .get('/', (req: DynamicRequest, res, next) => {
+        ModService
+            .getAll(req.userId)
+            .then(mods => res.send(mods))
+            .catch(next);
     });
 	
 export default modsController;

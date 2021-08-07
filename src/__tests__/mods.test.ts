@@ -75,7 +75,7 @@ describe('Mods', () => {
             });
 
         const response = await request(app)
-            .get('/')
+            .get('/api/v1/account/mods')
             .set({ Authorization: token });
 
         const {

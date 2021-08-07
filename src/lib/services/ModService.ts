@@ -22,4 +22,21 @@ export default class ModService {
             console.log(error);
         }
     }
+
+    static async getAll(userId: string): Promise<ModSummary[] | void> {
+        try {
+            const mods = await Mod.getUserMods(userId);
+
+            return mods.map(mod => ({
+                id: mod.id,
+                name: mod.name,
+                summary: mod.summary,
+                version: mod.version,
+                author: mod.author
+            }));
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }

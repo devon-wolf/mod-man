@@ -69,7 +69,7 @@ export interface ModSummary {
 	summary: string;
 	version: string;
 	author: string;
-	message: string;
+	message?: string;
 }
 
 //////////////////////
