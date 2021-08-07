@@ -93,6 +93,22 @@ describe('Mods', () => {
         }]);
     });
 
+    it('does not provide other users mods to a different user', async () => {
+        await request(app)
+            .post('/api/v1/account/mods')
+            .set({ Authorization: token })
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        const response = await request(app)
+            .get('/api/v1/account/mods')
+            .set({ Authorization: token2 });
+
+        expect(response.body).toEqual([]);
+    });
+
     it.skip('gets a user mod by id', async () => {
         console.log('placeholder');
     });
