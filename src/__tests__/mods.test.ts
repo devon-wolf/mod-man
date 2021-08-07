@@ -6,6 +6,7 @@ import { nexusSMAPI } from '../data/sample-data/smapi';
 
 describe('Mods', () => {
     let token = '';
+    let token2 = '';
 
     beforeEach(async () => {
         await setup(pool);
@@ -16,6 +17,14 @@ describe('Mods', () => {
                 password: 'seedpassword'
             });
         token = signUp.body.token;
+
+        const signUp2 = await request(app)
+            .post('/api/v1/auth/signup')
+            .send({
+                email: 'seed2@user.com',
+                password: 'seedpassword2'
+            });
+        token2 = signUp2.body.token;
     });
 
     it('adds a mod by user', async () => {
@@ -56,8 +65,32 @@ describe('Mods', () => {
         });
     });
 
-    it.skip('gets all mods by user', async () => {
-        console.log('placeholder');
+    it('gets all mods by user', async () => {
+        await request(app)
+            .post('/api/v1/account/mods')
+            .set({ Authorization: token })
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        const response = await request(app)
+            .get('/')
+            .set({ Authorization: token });
+
+        const {
+            name,
+            summary,
+            author
+        } = nexusSMAPI;
+
+        expect(response.body).toEqual([{
+            id: '1',
+            name,
+            summary,
+            version: expect.any(String),
+            author
+        }]);
     });
 
     it.skip('gets a user mod by id', async () => {
