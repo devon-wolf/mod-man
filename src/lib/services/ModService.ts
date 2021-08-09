@@ -39,4 +39,21 @@ export default class ModService {
             console.log(error);
         }
     }
+
+    static async getById(userId: string, modId: string): Promise<ModSummary | void> {
+        try {
+            const mod = await Mod.getUserModById(userId, modId);
+
+            return {
+                id: mod.id,
+                name: mod.name,
+                summary: mod.summary,
+                version: mod.version,
+                author: mod.author
+            };
+        }
+        catch (error) {
+            console.log(error);
+        }
+    } 
 }

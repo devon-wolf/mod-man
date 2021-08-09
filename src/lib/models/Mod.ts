@@ -69,6 +69,7 @@ export default class Mod {
 	    return rows[0];
 	}
 
+	// TODO reshape the constructor, the second param here is a mess
 	static async getUserMods(userId: string): Promise<Mod[]> {
 	    const { rows } = await pool.query(`
 		SELECT
@@ -80,5 +81,19 @@ export default class Mod {
 		`, [userId]);
 		
 	    return rows.map(row => new Mod(row, { user_id: row.user_id, mod_id: row.mod_id, current_version: row.current_version }));
+	}
+
+	static async getUserModById(userId: string, modId: string): Promise<Mod> {
+	    const { rows } = await pool.query(`
+		SELECT
+		*
+		FROM user_mods
+		JOIN mods
+		ON mods.id = user_mods.mod_id
+		WHERE user_id = $1
+		AND mod_id = $2
+		`, [userId, modId]);
+
+	    return new Mod(rows[0], { user_id: rows[0].user_id, mod_id: rows[0].mod_id, current_version: rows[0].current_version });
 	}
 }

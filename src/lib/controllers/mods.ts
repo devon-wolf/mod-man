@@ -15,6 +15,14 @@ const modsController = Router()
             .getAll(req.userId)
             .then(mods => res.send(mods))
             .catch(next);
+    })
+    
+    
+    .get('/:id', (req: DynamicRequest, res, next) => {
+        ModService
+            .getById(req.userId, req.params.id)
+            .then(mod => res.send(mod))
+            .catch(next);
     });
 	
 export default modsController;
