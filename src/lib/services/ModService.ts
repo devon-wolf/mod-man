@@ -2,6 +2,7 @@ import { ModRequest, ModSummary } from '../../types';
 import Mod from '../models/Mod';
 import { getModById } from '../utils/nexus';
 
+// TODO Consider bypassing service layer for the pieces that just pass along the results from the model
 export default class ModService {
     static async add({ gameDomain, modId }: ModRequest, userId: string): Promise<ModSummary | void> {
         const nexusMod = await getModById(gameDomain, modId, process.env.NEXUS_API_KEY || '');
@@ -9,14 +10,7 @@ export default class ModService {
         try {
             const mod = await Mod.insert(nexusMod, userId);
 
-            return {
-                id: mod.id,
-                name: mod.name,
-                summary: mod.summary,
-                version: mod.version,
-                author: mod.author,
-                message: `Mod added to user ${mod.userId}'s profile`
-            };
+            return mod;
         }
         catch (error){
             console.log(error);
@@ -27,13 +21,7 @@ export default class ModService {
         try {
             const mods = await Mod.getUserMods(userId);
 
-            return mods.map(mod => ({
-                id: mod.id,
-                name: mod.name,
-                summary: mod.summary,
-                version: mod.version,
-                author: mod.author
-            }));
+            return mods;
         }
         catch (error) {
             console.log(error);
@@ -44,13 +32,7 @@ export default class ModService {
         try {
             const mod = await Mod.getUserModById(userId, modId);
 
-            return {
-                id: mod.id,
-                name: mod.name,
-                summary: mod.summary,
-                version: mod.version,
-                author: mod.author
-            };
+            return mod;
         }
         catch (error) {
             console.log(error);

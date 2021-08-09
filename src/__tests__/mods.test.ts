@@ -2,7 +2,23 @@ import request from 'supertest';
 import setup from '../data/setup';
 import app from '../lib/app';
 import pool from '../lib/utils/pool';
-import { nexusSMAPI } from '../data/sample-data/smapi';
+
+const smapiMod = {
+    author: 'Pathoschild',      
+    currentVersion: '3.12.2',   
+    dbGameId: 1303,
+    dbModId: 2400,
+    dbUid: '5596342389088',
+    dependencies: null,
+    domainName: 'stardewvalley',     
+    gameId: null,
+    id: '1',
+    name: 'SMAPI - Stardew Modding API',
+    summary: 'The mod loader for Stardew Valley.',  
+    updatedAt: 1628179270,         
+    userId: '1',
+    version:'3.12.2'       
+};
 
 describe('Mods', () => {
     let token = '';
@@ -36,19 +52,11 @@ describe('Mods', () => {
                 modId: '2400'
             });
 
-        const {
-            name,
-            summary,
-            author
-        } = nexusSMAPI;
-
         expect(response.body).toEqual({
-            id: '1',
-            name,
-            summary,
+            ...smapiMod,
             version: expect.any(String),
-            author,
-            message: expect.any(String)
+            currentVersion: expect.any(String),
+            updatedAt: expect.any(Number)
         });
     });
 
@@ -78,18 +86,11 @@ describe('Mods', () => {
             .get('/api/v1/account/mods')
             .set({ Authorization: token });
 
-        const {
-            name,
-            summary,
-            author
-        } = nexusSMAPI;
-
         expect(response.body).toEqual([{
-            id: '1',
-            name,
-            summary,
+            ...smapiMod,
             version: expect.any(String),
-            author
+            currentVersion: expect.any(String),
+            updatedAt: expect.any(Number)
         }]);
     });
 
@@ -122,18 +123,11 @@ describe('Mods', () => {
             .get('/api/v1/account/mods/1')
             .set({ Authorization: token });
 
-        const {
-            name,
-            summary,
-            author
-        } = nexusSMAPI;
-
         expect(response.body).toEqual({
-            id: '1',
-            name,
-            summary,
+            ...smapiMod,
             version: expect.any(String),
-            author
+            currentVersion: expect.any(String),
+            updatedAt: expect.any(Number)
         });
     });
 
