@@ -73,8 +73,8 @@ export default class Mod {
 	    const { rows } = await pool.query(`
 		SELECT
 		*
-		FROM mods
-		LEFT JOIN user_mods
+		FROM user_mods
+		JOIN mods
 		ON mods.id = user_mods.mod_id
 		WHERE user_id = $1
 		`, [userId]);

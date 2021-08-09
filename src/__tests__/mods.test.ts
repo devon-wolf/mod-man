@@ -109,8 +109,32 @@ describe('Mods', () => {
         expect(response.body).toEqual([]);
     });
 
-    it.skip('gets a user mod by id', async () => {
-        console.log('placeholder');
+    it('gets a user mod by id', async () => {
+        await request(app)
+            .post('/api/v1/account/mods')
+            .set({ Authorization: token })
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        const response = await request(app)
+            .get('/api/v1/account/mods/1')
+            .set({ Authorization: token });
+
+        const {
+            name,
+            summary,
+            author
+        } = nexusSMAPI;
+
+        expect(response.body).toEqual({
+            id: '1',
+            name,
+            summary,
+            version: expect.any(String),
+            author
+        });
     });
 
     it.skip('updates a user mod by id', async () => {
