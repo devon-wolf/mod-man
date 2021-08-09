@@ -5,7 +5,6 @@ import pool from '../lib/utils/pool';
 
 const smapiMod = {
     author: 'Pathoschild',      
-    currentVersion: '3.12.2',   
     dbGameId: 1303,
     dbModId: 2400,
     dbUid: '5596342389088',
@@ -16,7 +15,6 @@ const smapiMod = {
     name: 'SMAPI - Stardew Modding API',
     summary: 'The mod loader for Stardew Valley.',  
     updatedAt: 1628179270,         
-    userId: '1',
     version:'3.12.2'       
 };
 
@@ -55,7 +53,6 @@ describe('Mods', () => {
         expect(response.body).toEqual({
             ...smapiMod,
             version: expect.any(String),
-            currentVersion: expect.any(String),
             updatedAt: expect.any(Number)
         });
     });
@@ -89,7 +86,6 @@ describe('Mods', () => {
         expect(response.body).toEqual([{
             ...smapiMod,
             version: expect.any(String),
-            currentVersion: expect.any(String),
             updatedAt: expect.any(Number)
         }]);
     });
@@ -126,7 +122,6 @@ describe('Mods', () => {
         expect(response.body).toEqual({
             ...smapiMod,
             version: expect.any(String),
-            currentVersion: expect.any(String),
             updatedAt: expect.any(Number)
         });
     });

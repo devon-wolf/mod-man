@@ -12,13 +12,11 @@ export default class Mod {
 	domainName: string;
 	version: string;
 	author: string;
-	dependencies: string[];
+	dependencies: string[] | null;
 	updatedAt: number;
 	gameId: string;
-	userId: string;
-	currentVersion: string;
 
-	constructor(mod: ModRow, userMod: UserModRow) {
+	constructor(mod: ModRow) {
 	    this.id = mod.id;
 	    this.name = mod.name;
 	    this.summary = mod.summary;
@@ -31,8 +29,6 @@ export default class Mod {
 	    this.dependencies = mod.dependencies;
 	    this.updatedAt = mod.updated_timestamp;
 	    this.gameId = mod.game_id;
-	    this.userId = userMod.user_id;
-	    this.currentVersion = userMod.current_version;
 	}
 
 	static async insert(mod: NexusMod, userId: string): Promise<Mod> {
@@ -53,9 +49,9 @@ export default class Mod {
 	        mod.updated_timestamp,
 	    ]);
 
-	    const userModsQuery = await this.insertUserMod(userId, rows[0]);
+	    await this.insertUserMod(userId, rows[0]);
 
-	    return new Mod(rows[0], userModsQuery);
+	    return new Mod(rows[0]);
 	}
 
 	static async insertUserMod(userId: string, row: ModRow): Promise<UserModRow> {
@@ -69,7 +65,6 @@ export default class Mod {
 	    return rows[0];
 	}
 
-	// TODO reshape the constructor, the second param here is a mess
 	static async getUserMods(userId: string): Promise<Mod[]> {
 	    const { rows } = await pool.query(`
 		SELECT
@@ -80,7 +75,7 @@ export default class Mod {
 		WHERE user_id = $1
 		`, [userId]);
 		
-	    return rows.map(row => new Mod(row, { user_id: row.user_id, mod_id: row.mod_id, current_version: row.current_version }));
+	    return rows.map(row => new Mod(row));
 	}
 
 	static async getUserModById(userId: string, modId: string): Promise<Mod> {
@@ -94,6 +89,6 @@ export default class Mod {
 		AND mod_id = $2
 		`, [userId, modId]);
 
-	    return new Mod(rows[0], { user_id: rows[0].user_id, mod_id: rows[0].mod_id, current_version: rows[0].current_version });
+	    return new Mod(rows[0]);
 	}
 }
