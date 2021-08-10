@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { ModRow, UserModRow, NexusMod } from '../../types';
+import { ModRow, UserModRow, NexusMod, UserModSummary } from '../../types';
 import pool from '../utils/pool';
 
 export default class Mod {
@@ -92,7 +92,7 @@ export default class Mod {
 	    return new Mod(rows[0]);
 	}
 
-	static async updateUserMod(userId: string, modId: string, updatedVersion: string): Promise<{ userId: string, modId: string, currentVersion: string }> {
+	static async updateUserMod(userId: string, modId: string, updatedVersion: string): Promise<UserModSummary> {
 	    const { rows } = await pool.query(`
 		UPDATE user_mods
 		SET current_version = $1
@@ -101,6 +101,23 @@ export default class Mod {
 		RETURNING *
 		`, [updatedVersion, userId, modId]);
 		
+	    const { user_id, mod_id, current_version } = rows[0];
+		
+	    return {
+	        userId: user_id,
+	        modId: mod_id,
+	        currentVersion: current_version
+	    };
+	}
+
+	static async deleteUserMod(userId: string, modId: string): Promise<UserModSummary> {
+	    const { rows } = await pool.query(`
+		DELETE FROM user_mods
+		WHERE user_id = $1
+		AND mod_id = $2
+		RETURNING *
+		`, [userId, modId]);
+
 	    const { user_id, mod_id, current_version } = rows[0];
 		
 	    return {

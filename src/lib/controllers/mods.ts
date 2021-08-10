@@ -30,6 +30,13 @@ const modsController = Router()
             .update(req.userId, req.params.id, req.body.currentVersion)
             .then(mod => res.send(mod))
             .catch(next);
+    })
+    
+    .delete('/:id', (req: DynamicRequest, res, next) => {
+        ModService
+            .remove(req.userId, req.params.id)
+            .then(message => res.send(message))
+            .catch(next);
     });
 	
 export default modsController;

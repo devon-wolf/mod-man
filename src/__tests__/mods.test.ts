@@ -147,7 +147,21 @@ describe('Mods', () => {
         });
     });
 
-    it.skip('deletes a user mod by id', async () => {
-        console.log('placeholder');
+    it('deletes a user mod by id', async () => {
+        await request(app)
+            .post('/api/v1/account/mods')
+            .set({ Authorization: token })
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        const response = await request(app)
+            .delete('/api/v1/account/mods/1')
+            .set({ Authorization: token });
+
+        expect(response.body).toEqual({
+            message: 'Mod 1 has been deleted from user 1\'s profile.'
+        });
     });
 });

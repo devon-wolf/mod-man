@@ -50,4 +50,11 @@ export default class ModService {
             console.log(error);
         }
     }
+
+    static async remove(userId: string, modId: string): Promise<ErrorMessage> {
+        const mod = await Mod.deleteUserMod(userId, modId);
+        return {
+            message: `Mod ${mod.modId} has been deleted from user ${mod.userId}'s profile.`
+        };
+    }
 }
