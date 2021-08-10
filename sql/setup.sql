@@ -30,7 +30,8 @@ CREATE TABLE mods (
 	version TEXT NOT NULL,	
 	author TEXT NOT NULL,
 	dependencies TEXT[],
-	game_id INTEGER NOT NULL REFERENCES games(id)
+	updated_timestamp INTEGER NOT NULL,
+	game_id BIGINT REFERENCES games(id)
 );
 
 -- junction --
@@ -38,5 +39,5 @@ CREATE TABLE mods (
 CREATE TABLE user_mods (
 	"user_id" BIGINT REFERENCES users(id),
 	mod_id BIGINT REFERENCES mods(id),
-	last_download TEXT NOT NULL
+	current_version TEXT NOT NULL
 );
