@@ -58,6 +58,12 @@ export interface UserModRow {
 	current_version: string;
 }
 
+export interface UserModSummary {
+	userId: string,
+	modId: string,
+	currentVersion: string
+}
+
 export interface ModRequest {
 	gameDomain: string;
 	modId: string;

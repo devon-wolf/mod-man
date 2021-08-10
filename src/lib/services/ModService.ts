@@ -1,4 +1,4 @@
-import { ErrorMessage, ModRequest, ModSummary } from '../../types';
+import { ErrorMessage, ModRequest, ModSummary, UserModSummary } from '../../types';
 import Mod from '../models/Mod';
 import { getModById } from '../utils/nexus';
 
@@ -34,11 +34,20 @@ export default class ModService {
     static async getById(userId: string, modId: string): Promise<ModSummary | void> {
         try {
             const mod = await Mod.getUserModById(userId, modId);
-
             return mod;
         }
         catch (error) {
             console.log(error);
         }
-    } 
+    }
+
+    static async update(userId: string, modId: string, currentVersion: string): Promise<UserModSummary | void> {
+        try {
+            const mod = await Mod.updateUserMod(userId, modId, currentVersion);
+            return mod;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }

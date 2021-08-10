@@ -23,6 +23,13 @@ const modsController = Router()
             .getById(req.userId, req.params.id)
             .then(mod => res.send(mod))
             .catch(next);
+    })
+    
+    .put('/:id', (req: DynamicRequest, res, next) => {
+        ModService
+            .update(req.userId, req.params.id, req.body.currentVersion)
+            .then(mod => res.send(mod))
+            .catch(next);
     });
 	
 export default modsController;

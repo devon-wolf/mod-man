@@ -126,8 +126,25 @@ describe('Mods', () => {
         });
     });
 
-    it.skip('updates a user mod by id', async () => {
-        console.log('placeholder');
+    it('updates a user mod by id', async () => {
+        await request(app)
+            .post('/api/v1/account/mods')
+            .set({ Authorization: token })
+            .send({
+                gameDomain: 'stardewvalley',
+                modId: '2400'
+            });
+
+        const response = await request(app)
+            .put('/api/v1/account/mods/1')
+            .set({ Authorization: token })
+            .send({ currentVersion: '3.0.0' });
+
+        expect(response.body).toEqual({
+            userId:'1',
+            modId: '1',
+            currentVersion: '3.0.0'
+        });
     });
 
     it.skip('deletes a user mod by id', async () => {

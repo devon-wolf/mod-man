@@ -91,4 +91,22 @@ export default class Mod {
 
 	    return new Mod(rows[0]);
 	}
+
+	static async updateUserMod(userId: string, modId: string, updatedVersion: string): Promise<{ userId: string, modId: string, currentVersion: string }> {
+	    const { rows } = await pool.query(`
+		UPDATE user_mods
+		SET current_version = $1
+		WHERE user_id = $2
+		AND mod_id = $3
+		RETURNING *
+		`, [updatedVersion, userId, modId]);
+		
+	    const { user_id, mod_id, current_version } = rows[0];
+		
+	    return {
+	        userId: user_id,
+	        modId: mod_id,
+	        currentVersion: current_version
+	    };
+	}
 }
