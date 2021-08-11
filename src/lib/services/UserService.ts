@@ -2,6 +2,9 @@ import { ErrorMessage, UserRequest, UserWithToken } from '../../types';
 import User from '../models/User';
 import { sign } from '../utils/jwt';
 import bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = Number(process.env.SALT_ROUNDS) || 10;
+
 export default class UserService {
 
     static async checkForUser(email: string): Promise<User | false> {
@@ -28,7 +31,7 @@ export default class UserService {
         if (userExists) return ({ message: 'A user already exists with that email' });
 
         else {
-            const hash = bcrypt.hashSync(password, 8);
+            const hash = bcrypt.hashSync(password, SALT_ROUNDS);
             try {
                 const user = await User.create(email, hash);
 
