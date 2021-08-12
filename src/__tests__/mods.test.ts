@@ -3,25 +3,27 @@ import setup from '../data/setup';
 import app from '../lib/app';
 import pool from '../lib/utils/pool';
 
-const smapiMod = {
-    author: 'Pathoschild',      
-    dbGameId: 1303,
-    dbModId: 2400,
-    dbUid: '5596342389088',
-    dependencies: null,
-    domainName: 'stardewvalley',     
-    gameId: null,
-    id: '1',
-    name: 'SMAPI - Stardew Modding API',
-    summary: 'The mod loader for Stardew Valley.',  
-    updatedAt: 1628179270,         
-    version:'3.12.2'       
-};
 
-describe.skip('Mods', () => {
+
+describe('Mods', () => {
     let token = '';
     let token2 = '';
 
+    const smapiMod = {
+        author: 'Pathoschild',      
+        dbGameId: 1303,
+        dbModId: 2400,
+        dbUid: '5596342389088',
+        dependencies: null,
+        domainName: 'stardewvalley',     
+        gameId: null,
+        id: '1',
+        name: 'SMAPI - Stardew Modding API',
+        summary: 'The mod loader for Stardew Valley.',  
+        updatedAt: 1628179270,         
+        version:'3.12.2'       
+    };
+    
     beforeEach(async () => {
         await setup(pool);
         const signUp = await request(app)
