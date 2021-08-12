@@ -10,28 +10,28 @@ export class DynamicError extends Error {
 }
 export interface DynamicRequest extends Request {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key: string]: any
+	[key: string]: any;
 }
 export interface ErrorMessage {
-	message: string
+	message: string;
 }
 
 /////////////////
 /* User Types */
 ///////////////
 export interface UserRow {
-	id: string,
-	email: string,
-	hash: string
+	id: string;
+	email: string;
+	hash: string;
 }
 export interface UserRequest {
-	email: string,
+	email: string;
 	password: string
 }
 export interface UserWithToken {
-	id: string,
-	email: string,
-	token: string
+	id: string;
+	email: string;
+	token: string;
 }
 
 ///////////////
@@ -53,15 +53,15 @@ export interface ModRow {
 }
 
 export interface UserModRow {
-	user_id: string,
-	mod_id: string,
+	user_id: string;
+	mod_id: string;
 	current_version: string;
 }
 
 export interface UserModSummary {
-	userId: string,
-	modId: string,
-	currentVersion: string
+	userId: string;
+	modId: string;
+	currentVersion: string;
 }
 
 export interface ModRequest {
@@ -78,28 +78,38 @@ export interface ModSummary {
 	message?: string;
 }
 
+////////////////
+/* Game Types */
+///////////////
+export interface GameRow {
+	id: string;
+	name: string;
+	domain_name: string;
+	db_game_id: number;
+}
+
 //////////////////////
 /* Nexus API Types */
 ////////////////////
 export interface NexusCategory {
-	category_id: number,
-	name: string,
-	parent_category: number
+	category_id: number;
+	name: string;
+	parent_category: number;
 }
 export interface NexusGame {
-	id: number,
-	name: string,
-	forum_url: string,
-	nexusmods_url: string,
-	genre: string,
-	downloads: number,
-	domain_name: string,
-	approved_date: number,
-	file_views: number,
-	authors: number,
-	file_endorsements: number,
-	mods: number,
-	categories: NexusCategory[]
+	id: number;
+	name: string;
+	forum_url: string;
+	nexusmods_url: string;
+	genre: string;
+	downloads: number;
+	domain_name: string;
+	approved_date: number;
+	file_views: number;
+	authors: number;
+	file_endorsements: number;
+	mods: number;
+	categories: NexusCategory[];
 }
 
 export interface NexusMod {
@@ -127,11 +137,11 @@ export interface NexusMod {
 	user: {
 		member_id: number;
 		member_group_id: number;
-		name: string
+		name: string;
 	};
 	endorsement: {
 		endorse_status: string;
 		timestamp: number | null;
-		version: string | null
+		version: string | null;
 	};
 }

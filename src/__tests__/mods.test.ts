@@ -18,7 +18,7 @@ const smapiMod = {
     version:'3.12.2'       
 };
 
-describe('Mods', () => {
+describe.skip('Mods', () => {
     let token = '';
     let token2 = '';
 
