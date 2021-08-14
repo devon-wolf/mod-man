@@ -7,9 +7,7 @@ export default class GameService {
         if (gameExists) return;
 
         const { name, domain_name, id } = await getGameByDomain(domain, process.env.NEXUS_API_KEY || '');
-
         const game = await Game.insert(name, domain_name, id);
-
         return game;
     }
 

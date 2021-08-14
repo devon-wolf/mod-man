@@ -4,7 +4,6 @@ import UserMod from '../models/UserMod';
 import GameService from '../services/GameService';
 import { getModById } from '../utils/nexus';
 
-// TODO Consider bypassing service layer for the pieces that just pass along the results from the model
 export default class ModService {
     
     static async add({ gameDomain, modId }: ModRequest, userId: string): Promise<ModSummary| ErrorMessage | void>  {
