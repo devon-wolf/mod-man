@@ -3,7 +3,7 @@ import setup from '../data/setup';
 import app from '../lib/app';
 import pool from '../lib/utils/pool';
 
-describe('Users', () => {
+describe.skip('Users', () => {
     let token = '';
 
     beforeEach(async () => {
@@ -24,7 +24,7 @@ describe('Users', () => {
                 email: 'testuser@test.com',
                 password: 'testpassword'
             });
-        
+
         expect(response.body).toEqual({
             id: '2',
             email: 'testuser@test.com',
@@ -52,7 +52,7 @@ describe('Users', () => {
                 email: 'seed@user.com',
                 password: 'seedpassword'
             });
-        
+
         expect(response.body).toEqual({
             id: '1',
             email: 'seed@user.com',
