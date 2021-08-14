@@ -1,4 +1,4 @@
-import { GameRow, NexusGame } from '../../types';
+import { GameRow } from '../../types';
 import pool from '../utils/pool';
 
 export default class Game {
