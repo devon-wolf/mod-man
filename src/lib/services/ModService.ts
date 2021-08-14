@@ -1,22 +1,20 @@
 import { ErrorMessage, ModRequest, ModSummary, UserModSummary } from '../../types';
 import Mod from '../models/Mod';
 import UserMod from '../models/UserMod';
+import GameService from '../services/GameService';
 import { getModById } from '../utils/nexus';
 
 // TODO Consider bypassing service layer for the pieces that just pass along the results from the model
 export default class ModService {
     static async add({ gameDomain, modId }: ModRequest, userId: string): Promise<ModSummary| ErrorMessage | void>  {
+
         if (process.env.NEXUS_API_KEY) {
             const nexusMod = await getModById(gameDomain, modId, process.env.NEXUS_API_KEY);
+            
+            await GameService.add(nexusMod.domain_name);
 
-            try {
-                const mod = await Mod.insert(nexusMod, userId);
-    
-                return mod;
-            }
-            catch (error){
-                console.log(error);
-            }
+            const mod = await Mod.insert(nexusMod, userId);
+            return mod;
         }
         else return ({ message: 'No API key provided' });
     }
