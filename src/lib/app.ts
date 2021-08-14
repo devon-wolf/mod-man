@@ -5,7 +5,6 @@ import modsController from './controllers/mods';
 import gamesController from './controllers/games';
 import checkAuth from './middleware/auth-handling';
 
-
 const app = express();
 
 app.use(express.json());
