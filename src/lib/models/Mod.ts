@@ -1,5 +1,6 @@
-import { ModRow, UserModRow, NexusMod, UserModSummary } from '../../types';
+import { ModRow, NexusMod } from '../../types';
 import pool from '../utils/pool';
+import UserMod from './UserMod';
 
 export default class Mod {
     id: string;
@@ -48,81 +49,8 @@ export default class Mod {
             mod.updated_timestamp,
         ]);
 
-        await this.insertUserMod(userId, rows[0]);
+        await UserMod.insertUserMod(userId, rows[0]);
 
         return new Mod(rows[0]);
-    }
-
-    static async insertUserMod(userId: string, row: ModRow): Promise<UserModRow> {
-        const { rows } = await pool.query(`
-        INSERT INTO user_mods
-        (user_id, mod_id, current_version)
-        VALUES ($1, $2, $3)
-        RETURNING *
-        `, [userId, row.id, row.version]);
-
-        return rows[0];
-    }
-
-    static async getUserMods(userId: string): Promise<Mod[]> {
-        const { rows } = await pool.query(`
-        SELECT
-        *
-        FROM user_mods
-        JOIN mods
-        ON mods.id = user_mods.mod_id
-        WHERE user_id = $1
-        `, [userId]);
-        
-        return rows.map(row => new Mod(row));
-    }
-
-    static async getUserModById(userId: string, modId: string): Promise<Mod> {
-        const { rows } = await pool.query(`
-        SELECT
-        *
-        FROM user_mods
-        JOIN mods
-        ON mods.id = user_mods.mod_id
-        WHERE user_id = $1
-        AND mod_id = $2
-        `, [userId, modId]);
-
-        return new Mod(rows[0]);
-    }
-
-    static async updateUserMod(userId: string, modId: string, updatedVersion: string): Promise<UserModSummary> {
-        const { rows } = await pool.query(`
-        UPDATE user_mods
-        SET current_version = $1
-        WHERE user_id = $2
-        AND mod_id = $3
-        RETURNING *
-        `, [updatedVersion, userId, modId]);
-        
-        const { user_id, mod_id, current_version } = rows[0];
-        
-        return {
-            userId: user_id,
-            modId: mod_id,
-            currentVersion: current_version
-        };
-    }
-
-    static async deleteUserMod(userId: string, modId: string): Promise<UserModSummary> {
-        const { rows } = await pool.query(`
-        DELETE FROM user_mods
-        WHERE user_id = $1
-        AND mod_id = $2
-        RETURNING *
-        `, [userId, modId]);
-
-        const { user_id, mod_id, current_version } = rows[0];
-        
-        return {
-            userId: user_id,
-            modId: mod_id,
-            currentVersion: current_version
-        };
     }
 }
