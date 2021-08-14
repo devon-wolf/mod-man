@@ -17,6 +17,7 @@ describe('Games', () => {
         token = signUp.body.token;
     });
 
+    // TODO likely remove this endpoint and test, games don't need to be created except as a side effect
     it('creates a new game by its domain', async () => {
         const response = await request(app)
             .post('/api/v1/account/games')
@@ -31,7 +32,7 @@ describe('Games', () => {
         });
     });
 
-    it('gets all games associated with a user account', async () => {
+    it('gets all games associated with a user account, without duplicates', async () => {
         await request(app)
             .post('/api/v1/account/mods')
             .set({ Authorization: token })
