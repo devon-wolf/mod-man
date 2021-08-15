@@ -10,7 +10,8 @@ import {
 import { nexusMorrowind } from '../data/sample-data/morrowind';
 import { nexusSMAPI } from '../data/sample-data/smapi';
 
-// skip unless troubleshooting or making changes to these functions in order to save API calls
+// skip unless troubleshooting or making changes to these functions; the needed functionality is tested elsewhere
+
 describe.skip('Nexus API', () => {
     const apiKey = process.env.NEXUS_API_KEY || 'no key found';
 

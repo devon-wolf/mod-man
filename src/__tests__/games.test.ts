@@ -3,6 +3,8 @@ import setup from '../data/setup';
 import app from '../lib/app';
 import pool from '../lib/utils/pool';
 
+// TODO set up mock for Nexus fetch
+
 describe('Games', () => {
     let token = '';
 
