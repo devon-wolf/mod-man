@@ -1,0 +1,14 @@
+form {
+    background-color: lavender;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    background-color: chartreuse;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}

@@ -12,3 +12,23 @@ html, body {
 body {
     background-color: goldenrod;
 }
+
+header, main {
+    padding: 1rem;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+header {
+    background-color: hotpink;
+}
+
+nav {
+    background-color: azure;
+}
+
+main {
+    background-color: aquamarine;
+}
