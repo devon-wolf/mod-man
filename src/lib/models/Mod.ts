@@ -53,4 +53,24 @@ export default class Mod {
 
         return new Mod(rows[0]);
     }
+
+    static async checkExists(modId: string): Promise<Mod | null> {
+        const { rows } = await pool.query(`
+            SELECT id FROM mods
+            WHERE db_mod_id = $1
+        `, [modId]);
+
+        return rows.length ? new Mod(rows[0]) : null;
+    }
+
+    static async update(id: string, mod: NexusMod): Promise<Mod> {
+        const { rows } = await pool.query(`
+            UPDATE mods
+            SET version = $1,
+            updated_timestamp = $2
+            RETURNING *
+        `, [mod.version, mod.updated_timestamp]);
+
+        return new Mod(rows[0]);
+    }
 }

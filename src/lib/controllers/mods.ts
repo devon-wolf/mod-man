@@ -17,7 +17,6 @@ const modsController = Router()
             .catch(next);
     })
     
-    
     .get('/:id', (req: DynamicRequest, res, next) => {
         ModService
             .getById(req.userId, req.params.id)

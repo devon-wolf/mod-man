@@ -3,7 +3,7 @@ import setup from '../data/setup';
 import app from '../lib/app';
 import pool from '../lib/utils/pool';
 
-describe.skip('Users', () => {
+describe('Users', () => {
     let token = '';
 
     beforeEach(async () => {
