@@ -17,7 +17,7 @@ header, main {
     padding: 1rem;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     margin: 0;
 }
 
@@ -31,4 +31,11 @@ nav {
 
 main {
     background-color: aquamarine;
+}
+
+ul {
+    padding-left: unset;
+    list-style: none;
+    background-color: olivedrab;
+    margin: 0;
 }
