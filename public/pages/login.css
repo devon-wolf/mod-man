@@ -9,6 +9,7 @@ form {
 label {
     background-color: chartreuse;
     width: 90%;
+    min-width: 250px;
     max-width: 300px;
     display: flex;
     justify-content: space-between;

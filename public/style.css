@@ -13,6 +13,10 @@ body {
     background-color: goldenrod;
 }
 
+body, input, button {
+    font-family: monospace;
+}
+
 header, main {
     padding: 1rem;
 }
@@ -23,10 +27,30 @@ h1, h2, h3, h4 {
 
 header {
     background-color: hotpink;
+    display: flex;
+    justify-content: space-between;
 }
 
 nav {
-    background-color: azure;
+    display: flex;
+    align-items: center;
+}
+
+nav a, nav span {
+    margin: .25rem;
+}
+
+a, a:link {
+    color: honeydew;
+    text-decoration: none;
+}
+
+a:hover {
+    color: blue;
+}
+
+a:active {
+    color: orangered;
 }
 
 main {
@@ -36,6 +60,9 @@ main {
 ul {
     padding-left: unset;
     list-style: none;
-    background-color: olivedrab;
     margin: 0;
+}
+
+section {
+    background-color: gold;
 }
