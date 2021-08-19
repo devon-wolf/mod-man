@@ -1,11 +1,18 @@
-.search-controls label {
+.search-controls form, .search-controls label {
+    background-color: orange;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
+
+.search-controls label, .search-controls button {
+    margin: .25rem;
 }
 
 .search-results {
     background-color: lightseagreen;
+    color: ivory;
 }
 
 .mod-list {
